@@ -1,0 +1,24 @@
+import 'package:cybercare/core/common/cubits/app_user.dart';
+import 'package:cybercare/core/network/connection_checker.dart';
+import 'package:cybercare/core/secrets/app_secrets.dart';
+import 'package:cybercare/features/auth/data/datasources/auth_supabase.dart';
+import 'package:cybercare/features/auth/data/repository/auth_repository_impl.dart';
+import 'package:cybercare/features/auth/domain/repository/auth_repository.dart';
+import 'package:cybercare/features/auth/domain/usecases/current_user.dart';
+import 'package:cybercare/features/auth/domain/usecases/forgot_password.dart';
+import 'package:cybercare/features/auth/domain/usecases/update_user_profile.dart';
+import 'package:cybercare/features/auth/domain/usecases/user_login.dart';
+import 'package:cybercare/features/auth/domain/usecases/user_logout.dart';
+import 'package:cybercare/features/auth/domain/usecases/user_sign_up.dart';
+import 'package:cybercare/features/auth/view/bloc/auth_bloc.dart';
+import 'package:cybercare/features/resources/data/datasources/remote_data_source.dart';
+import 'package:cybercare/features/resources/data/repositories/resource_repository_implementation.dart';
+import 'package:cybercare/features/resources/domain/repositories/resource_repository.dart';
+import 'package:cybercare/features/resources/domain/usecase/get_all_resources.dart';
+import 'package:cybercare/features/resources/domain/usecase/upload_resource.dart';
+import 'package:cybercare/features/resources/view/resourcebloc/resource_bloc.dart';
+import 'package:get_it/get_it.dart';
+import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+
+part 'init.dependencies.main.dart';
