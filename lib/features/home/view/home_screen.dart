@@ -260,12 +260,12 @@ class _CurrentModuleCard extends StatelessWidget {
                         value: module.percentComplete,
                         minHeight: 10,
                         backgroundColor: Colors.grey.shade300,
-                        color: AppColors.statusGreen,
+                        color: AppColors.accentYellow,
                       ),
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      'Lesson $displayLesson of $totalLessons · ${module.duration}',
+                      'Lesson $displayLesson of $totalLessons',
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: AppColors.white),
                     ),
                   ],
@@ -559,7 +559,7 @@ class _ModuleStatusSectionState extends State<_ModuleStatusSection> {
           // BlocBuilder to filter lists
           BlocBuilder<ModuleBloc, ModuleState>(
             builder: (context, state) {
-              if (state is ModuleLoading) return const Center(child: CircularProgressIndicator());
+              if (state is ModuleLoading) return const Center(child: CircularProgressIndicator(color: AppColors.accentYellow,));
               if (state is ModuleLoaded) {
 
                 // Filter Logic

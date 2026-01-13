@@ -31,7 +31,9 @@ class _TopicViewerScreenState extends State<TopicViewerScreen> {
   Future<void> _initializePlayer() async {
     setState(() => _isLoading = true);
     try {
-      _videoController = VideoPlayerController.networkUrl(Uri.parse(widget.topic.videoUrl!));
+      _videoController = VideoPlayerController.networkUrl(
+        Uri.parse(widget.topic.videoUrl!),
+      );
       await _videoController!.initialize();
 
       _chewieController = ChewieController(
@@ -40,7 +42,12 @@ class _TopicViewerScreenState extends State<TopicViewerScreen> {
         looping: false,
         aspectRatio: _videoController!.value.aspectRatio,
         errorBuilder: (context, errorMessage) {
-          return Center(child: Text(errorMessage, style: const TextStyle(color: Colors.white)));
+          return Center(
+            child: Text(
+              errorMessage,
+              style: const TextStyle(color: Colors.white),
+            ),
+          );
         },
       );
       setState(() {});
@@ -80,7 +87,10 @@ class _TopicViewerScreenState extends State<TopicViewerScreen> {
             backgroundColor: AppColors.primaryDark,
             minimumSize: const Size(double.infinity, 50),
           ),
-          child: const Text("Complete Lesson", style: TextStyle(color: Colors.white)),
+          child: const Text(
+            "Complete Lesson",
+            style: TextStyle(color: Colors.white),
+          ),
         ),
       ),
       body: widget.topic.type == 'video' ? _buildVideoView() : _buildTextView(),
@@ -104,9 +114,25 @@ class _TopicViewerScreenState extends State<TopicViewerScreen> {
             child: Chewie(controller: _chewieController!),
           ),
           const SizedBox(height: 20),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: MarkdownBody(data: widget.topic.content), // Video description
+          Expanded(
+            // <--- Takes up remaining space
+            child: SingleChildScrollView(
+              // <--- Makes only the text scrollable
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: MarkdownBody(
+                  data: widget.topic.content,
+                  styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context))
+                      .copyWith(
+                        p: TextStyle(color: AppColors.primaryDark),
+                        h1: TextStyle(color: AppColors.primaryDark),
+                        h2: TextStyle(color: AppColors.primaryDark),
+                        h3: TextStyle(color: AppColors.primaryDark),
+                        listBullet: TextStyle(color: AppColors.primaryDark),
+                      ),
+                ),
+              ),
+            ),
           ),
         ],
       );

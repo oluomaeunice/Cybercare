@@ -163,14 +163,23 @@ class _Tag extends StatelessWidget {
   final String text;
   final Color color;
   final Color textColor;
-  const _Tag({required this.text, required this.color, required this.textColor});
+  final bool ifTimerIs;
+  const _Tag({required this.text, required this.color, required this.textColor, required this.ifTimerIs});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
       decoration: BoxDecoration(color: color, borderRadius: BorderRadius.circular(8)),
-      child: Text(text, style: TextStyle(color: textColor, fontSize: 12, fontWeight: FontWeight.w600)),
+      child: Row(
+        children: [
+          if (ifTimerIs) Padding(
+            padding: const EdgeInsets.only(right: 6.0),
+            child: Icon(Iconsax.clock, size: 15, color: textColor,),
+          ),
+          Text(text, style: TextStyle(color: textColor, fontSize: 12, fontWeight: FontWeight.w600)),
+        ],
+      ),
     );
   }
 }
@@ -186,7 +195,7 @@ class _ModuleProgressCard extends StatelessWidget {
     // Determine the color for the progress bar
     final Color progressColor = module.percentComplete == 1.0
         ? Colors.green
-        : AppColors.primaryDark;
+        : AppColors.accentYellow;
 
     return Padding(
       padding: const EdgeInsets.only(bottom: 16.0),
@@ -209,23 +218,15 @@ class _ModuleProgressCard extends StatelessWidget {
           child: Row(
             children: [
               Container(
-                width: 48,
-                decoration: BoxDecoration(
-                  color: AppColors.primaryDark,
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                alignment: Alignment.center,
-                child://             if (module.imageUrl != null)
-              ClipRRect(
-                borderRadius: const BorderRadius.all(Radius.circular(10)),
-                child: Image.network(
-                  module.imageUrl!,
-                  width: double.infinity,
-                  fit: BoxFit.cover,
+                width: 60,
+                height: 60,
+                decoration: BoxDecoration(color: AppColors.cardBlue, shape: BoxShape.circle),
+                child: ClipOval(
+                  child: module.imageUrl != null
+                      ? Image.network(module.imageUrl!, fit: BoxFit.cover, errorBuilder: (_,__,___) => Icon(Iconsax.document, color: AppColors.primaryDark))
+                      : Icon(Iconsax.document, color: AppColors.primaryDark, size: 28),
                 ),
               ),
-              ),
-
               const SizedBox(width: 16),
 
               // 2. Module Details
@@ -241,7 +242,7 @@ class _ModuleProgressCard extends StatelessWidget {
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                       ),
-                      maxLines: 2,
+                      maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
                     const SizedBox(height: 4),
@@ -249,9 +250,9 @@ class _ModuleProgressCard extends StatelessWidget {
                     // Difficulty & Duration (Tags)
                 Row(
                     children: [
-                      _Tag(text: module.difficulty, color: Colors.blue.shade100, textColor: Colors.blue.shade900),
+                      _Tag(text: module.difficulty, color: Colors.blue.shade100, textColor: Colors.blue.shade900,ifTimerIs:false),
                       const SizedBox(width: 8),
-                      _Tag(text: module.duration, color: Colors.orange.shade100, textColor: Colors.orange.shade900),
+                      _Tag(text: module.duration, color: Colors.orange.shade100, textColor: Colors.orange.shade900,ifTimerIs:true),
                     ],
                   ),
                     const SizedBox(height: 8),

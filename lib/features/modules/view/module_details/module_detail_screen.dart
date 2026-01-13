@@ -141,7 +141,7 @@ class ModuleDetailScreen extends StatelessWidget {
               lineHeight: 8.0,
               percent: progress,
               backgroundColor: Colors.grey.shade200,
-              progressColor: progress == 1.0 ? Colors.green : AppColors.primaryDark,
+              progressColor: progress == 1.0 ? Colors.green : AppColors.accentYellow,
               barRadius: const Radius.circular(10),
               padding: EdgeInsets.zero,
             ),
